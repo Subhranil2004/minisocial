@@ -62,12 +62,10 @@ flutter pub get
 
 ```bash
 # For development
+flutter clean
+flutter pub get
+flutter pub run flutter_launcher_icons
 flutter run
-
-# For specific platform
-flutter run -d chrome  # Web
-flutter run -d android # Android
-flutter run -d ios     # iOS
 ```
 
 ## 📱 Screenshots
