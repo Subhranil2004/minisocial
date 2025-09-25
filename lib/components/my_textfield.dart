@@ -14,6 +14,7 @@ class MyTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      // enableInteractiveSelection: true, // Ensure this is true
       obscureText: obscureText,
       controller: controller,
       decoration: InputDecoration(

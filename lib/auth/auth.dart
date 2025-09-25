@@ -9,19 +9,20 @@ class AuthPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StreamBuilder(
+      body: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(), 
         builder: (context, snapshot) {
+          // Show loading while waiting for auth state
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          
           // user is logged in
-          if(snapshot.hasData) {
-            print("Showing Homepage");
+          if (snapshot.hasData && snapshot.data != null) {
             return HomePage();
           } else {
-            print("Showing LoginOrRegister");
-            return LoginOrRegister();
+            return const LoginOrRegister();
           }
-
-          // user is not logged in
         },
       ),
     );

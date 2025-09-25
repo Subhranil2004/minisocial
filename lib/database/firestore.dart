@@ -10,9 +10,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class FireStoreDatabase {
-  // current logged in user
-  User? currentUser = FirebaseAuth.instance.currentUser;
-
   // get collection of posts
   CollectionReference getPostsCollection() {
     return FirebaseFirestore.instance.collection('Posts');
@@ -20,9 +17,12 @@ class FireStoreDatabase {
 
   // post a message
   Future<void> addPost(String message) async {
+    // Get current user dynamically
+    User? currentUser = FirebaseAuth.instance.currentUser;
+    
     if (currentUser != null) {
       await getPostsCollection().add({
-        'sender': currentUser!.email,
+        'sender': currentUser.email,
         'message': message,
         'timestamp': Timestamp.now(),
       });

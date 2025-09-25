@@ -31,11 +31,14 @@ class _LoginPageState extends State<LoginPage> {
       await ensureUserDocument(userCredential);
       
     } on FirebaseAuthException catch (e) {
-      // show error message
+      // Log authentication errors for debugging
+      print("Login failed: ${e.code}");
       if (context.mounted) {
         displayMessageToUser(e.code, context);
       }
     } catch (e) {
+      // Log unexpected errors
+      print("Login error: $e");
       if (context.mounted) {
         displayMessageToUser(e.toString(), context);
       }
@@ -54,15 +57,16 @@ class _LoginPageState extends State<LoginPage> {
       
       // If user document doesn't exist, create it
       if (!userDoc.exists) {
-        await FirebaseFirestore.instance
-            .collection('Users')
-            .doc(email)
-            .set({
-          'username': email.split('@')[0], // Use email prefix as default username
-          'email': email,
-          'uid': userCredential.user!.uid,
-          'createdAt': FieldValue.serverTimestamp(),
-        });
+        print("USER DOC NOT FOUND!");
+      //   await FirebaseFirestore.instance
+      //       .collection('Users')
+      //       .doc(email)
+      //       .set({
+      //     'username': email.split('@')[0], // Use email prefix as default username
+      //     'email': email,
+      //     'uid': userCredential.user!.uid,
+      //     'createdAt': FieldValue.serverTimestamp(),
+      //   });
       }
     }
   }
